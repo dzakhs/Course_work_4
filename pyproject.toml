@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "course-work-4"
+version = "0.1.0"
+description = ""
+authors = ["Dmitry Zakhs <d.zakhs@gmail.com>"]
+readme = "README.md"
+packages = [{include = "course_work_4"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+[tool.poetry.group.dev.dependencies]
+requests = "^2.28.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
