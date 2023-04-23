@@ -3,7 +3,7 @@ from src.url_api_class import UrlApi
 import requests
 import os
 
-
+# создаем класс для получения данных о вакансиях с сайта superjob.ru
 class SuperJobApi(UrlApi):
 
     def __init__(self):
@@ -15,6 +15,11 @@ class SuperJobApi(UrlApi):
 
 
     def get_vacancies(self, keyword):
+        """
+        метод для получения данных о вакансиях с сайте
+        :param keyword: ключевое слово для поиска
+        :return: список со словарями
+        """
         params = {'keyword': keyword,
                   'count': 100,
                   'period': 0,

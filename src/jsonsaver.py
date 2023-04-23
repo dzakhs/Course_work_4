@@ -4,7 +4,7 @@ from src.vacancies import Vacancy
 from src.hh_api import HeadHunterAPI
 from src.sjob_api import SuperJobApi
 
-
+# создаем класс для работы с json файлом
 class JSONSaver(Saver):
     def __init__(self, keyword):
         self.__filename = f'{keyword.title()}_vacancies.json'
@@ -14,6 +14,12 @@ class JSONSaver(Saver):
         return self.__filename
 
     def add_data(self, data, platform):
+        """
+        метод создает экземпляры класса Vacancy и записывает данные в json файл
+        :param data: список с вакансиями
+        :param platform: экземпляр класса Headhunter или Superjob
+
+        """
         id = 0
         vacancies = []
         vacancies_dict = {}
@@ -52,20 +58,46 @@ class JSONSaver(Saver):
 
 
         with open(self.__filename, 'w', encoding='utf-8') as outfile:
-             json.dump(vacancies_dict,outfile, default=lambda x: x.__dict__, indent=4, ensure_ascii=False)
+             json.dump(vacancies_dict,outfile, default=lambda x: x.__slots__, indent=4, ensure_ascii=False)
 
 
 
     def get_data(self):
-        with open(self.__filename, 'r', encoding='utf-8') as file:
-            data = json.load(file)
+        """
+        метод переводит данные из json файла в формат python
+        :return:
+        """
+
+        try:
+             with open(self.__filename, 'r', encoding='utf-8') as file:
+              data = json.load(file)
+        except FileNotFoundError:
+            print("Файл не найден")
 
         return data
 
 
 
 
+
     def delete_data(self):
-
+        """
+        метод удаляет выбранную пользователем вакансию и перезвписывает json файл
+        :return:
+        """
         pass
+        #user_input = input("Введите номер вакансии для удаления: ")
 
+        #try:
+        #    with open(self.__filename, 'r', encoding='utf-8') as file:
+        #        data = json.load(file)
+        #except FileNotFoundError:
+        #    print('Файла не существует')
+
+        #try:
+        #    data.pop[user_input]
+        #except KeyError:
+        #    print('Вакансии с таким номером не существует')
+
+        #with open(self.__filename, 'w', encoding='utf-8') as outfile:
+        #     json.dump(data,outfile, default=lambda x: x.__slots__, indent=4, ensure_ascii=False)

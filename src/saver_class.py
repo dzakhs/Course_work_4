@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-
+# создаем абстрактный класс для работы с json файлом
 class Saver(ABC):
 
     @abstractmethod

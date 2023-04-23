@@ -1,5 +1,5 @@
 import json
-
+# создаем класс для работы с вакансиями
 class Vacancy:
     __slots__ = ('name', 'url','description','salary_from', 'salary_to', 'experience')
     def __init__(self, name, url, description, experience, salary_from, salary_to):

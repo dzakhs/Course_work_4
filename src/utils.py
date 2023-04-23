@@ -5,6 +5,10 @@ from src.sjob_api import SuperJobApi
 
 
 def choose_platform():
+    """
+    Функция запрашивает у пользователя с какого сайте запрашивать вакансии
+    :return: экзепляр класса HeadHunter  или SuperJob
+    """
     while True:
          user_input = input('Выберите платформу для поиска вакансий: HH для HeadHunter, SJ для SuperJob  ').upper()
          if user_input == "HH":
@@ -20,6 +24,12 @@ def choose_platform():
 
 
 def search_query(platform):
+    """
+    Функция запрашивает вакансии с сайта, сортирует по уровню зарабатной платы и создает экземпляр
+    класса JsonSaver
+    :param platform: экземпляр класса HeadHunter или SuperJob
+    :return: отсортированный список и экземпляр класса JSONSaver
+    """
     if isinstance(platform, HeadHunterAPI):
         keyword = input("Введите поисковый запрос  ")
         hh_vac = platform.get_vacancies(keyword)
@@ -44,6 +54,12 @@ def search_query(platform):
 
 
 def filter_vacancies(data, platform):
+    """
+    Функуия выполняет поиск по ключевым словам в отсортированному списку вакансий
+    :param data: отсоритированный список вакансий
+    :param platform:экзепляр класса HeadHunter или SuperJob
+    :return: список вакансий
+    """
     value = input("Введите запрос для фильтрации вакансий: ").lower()
     filtered_list = []
     if value == '':
@@ -79,6 +95,13 @@ def filter_vacancies(data, platform):
 
 
 def find_salary(data,platform):
+    """
+    Функуия выполняет поиск по уровню зарплаты в отсортированном списке вакансий
+    :param data: отсоритированный список вакансий
+    :param platform:экзепляр класса HeadHunter или SuperJob
+    :return: список вакансий
+
+    """
     user_input = input('Укажите уровень заработной платы: ')
     if user_input == '':
         return data
@@ -102,15 +125,28 @@ def find_salary(data,platform):
         print("По вашему запросу вакансии не найдены")
 
 def sort_by_salary_from_hh(data):
+    """
+    Функция сортировки вакансий с сайта hh.ru
+    :param data: cписок вакансий
+    """
     sort_data = sorted(data, key=lambda x: x['salary']['from'], reverse=True)
     return sort_data
 
 
 def sort_by_salary_from_sj(data):
+    """
+    Функция сортировки вакансий с сайта superjob.ru
+    :param data: cписок вакансий
+    """
     sort_data = sorted(data, key=lambda x: x['payment_from'], reverse=True)
     return sort_data
 
 def top_n_vacancies(data):
+    """
+    Функция выводит заданное пользователем количество вакансий
+    :param data: общий список вакансий
+    :return: список вакансий определнных пользователем
+    """
     while True:
         user_unput = int(input("Введите количество вакансий для вывода данных: "))
         if user_unput <= len(data):
@@ -121,13 +157,16 @@ def top_n_vacancies(data):
 
 
 def main():
-    platform = choose_platform()
-    vacancies, json_saver_item = search_query(platform)
-    salary_level = find_salary(vacancies, platform)
-    user_filter = filter_vacancies(salary_level, platform)
-    top_n = top_n_vacancies(user_filter)
-    json_saver_item.add_data(top_n, platform)
-
+    """
+    Функция взаимодествия с пользователем
+    :return: json файл с выбранными вакансиями
+    """
+    platform = choose_platform()     # выбор сайта
+    vacancies, json_saver_item = search_query(platform)    #загрузка вакансий
+    salary_level = find_salary(vacancies, platform)   #поиск вакансий по зарплате
+    user_filter = filter_vacancies(salary_level, platform) #поиск вакансий по ключевым словам
+    top_n = top_n_vacancies(user_filter) #вывод необходимого количества вакансий
+    json_saver_item.add_data(top_n, platform) #запись вакансий в json файл
 
 
 
