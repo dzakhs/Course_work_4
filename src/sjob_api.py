@@ -1,5 +1,5 @@
-from src.jsonsaver import JSONSaver
-from url_api_class import UrlApi
+
+from src.url_api_class import UrlApi
 import requests
 import os
 

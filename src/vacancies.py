@@ -41,3 +41,5 @@ class VacancyEncoder(json.JSONEncoder):
         if isinstance(obj, Vacancy):
             return obj.__slots__
         return json.JSONEncoder.default(self, obj)
+
+
