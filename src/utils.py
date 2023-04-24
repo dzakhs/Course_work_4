@@ -156,6 +156,10 @@ def top_n_vacancies(data):
            print("Нет такого количества вакансий. Повторите попытку.")
 
 
+
+
+
+
 def main():
     """
     Функция взаимодествия с пользователем
@@ -167,6 +171,9 @@ def main():
     user_filter = filter_vacancies(salary_level, platform) #поиск вакансий по ключевым словам
     top_n = top_n_vacancies(user_filter) #вывод необходимого количества вакансий
     json_saver_item.add_data(top_n, platform) #запись вакансий в json файл
+    json_saver_item.delete_data()
+
+
 
 
 

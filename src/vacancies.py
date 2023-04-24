@@ -36,10 +36,6 @@ class Vacancy:
         return int(self.salary_from) >= int(other.salary_from)
 
 
-class VacancyEncoder(json.JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, Vacancy):
-            return obj.__slots__
-        return json.JSONEncoder.default(self, obj)
+
 
 

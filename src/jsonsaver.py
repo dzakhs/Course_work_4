@@ -82,22 +82,22 @@ class JSONSaver(Saver):
 
     def delete_data(self):
         """
-        метод удаляет выбранную пользователем вакансию и перезвписывает json файл
+        Метод удаляет выбранную пользователем вакансию и перезаписывает json файл
         :return:
         """
-        pass
-        #user_input = input("Введите номер вакансии для удаления: ")
+        while True:
+            user_input = input("Для выхода из программы наберите 'quit', для удаления вакансии из файла нажмите 'Enter' ")
+            if user_input == 'quit':
+                quit('Работа с программой завершена')
+            else:
+                vacancy_id = input("Введите номер вакансии для удаления: ")
+                try:
+                   with open(self.__filename, 'r', encoding='utf-8') as file:
+                        data = json.load(file)
+                except FileNotFoundError:
+                   print('Файла не существует')
 
-        #try:
-        #    with open(self.__filename, 'r', encoding='utf-8') as file:
-        #        data = json.load(file)
-        #except FileNotFoundError:
-        #    print('Файла не существует')
+            data = {key: val for key, val in data.items() if key != vacancy_id}
 
-        #try:
-        #    data.pop[user_input]
-        #except KeyError:
-        #    print('Вакансии с таким номером не существует')
-
-        #with open(self.__filename, 'w', encoding='utf-8') as outfile:
-        #     json.dump(data,outfile, default=lambda x: x.__slots__, indent=4, ensure_ascii=False)
+            with open(self.__filename, 'w', encoding='utf-8') as outfile:
+                     json.dump(data,outfile, default=lambda x: x.__slots__, indent=4, ensure_ascii=False)
